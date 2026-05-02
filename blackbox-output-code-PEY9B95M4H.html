@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love to Eat - Freshly Baked Happiness Every Day</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #4a4a4a;
+            overflow-x: hidden;
+        }
+
+        /* Color Palette */
+        :root {
+            --cream: #F5F5F0;
+            --light-pink: #F8E1E9;
+            --beige: #F0E8D9;
+            --chocolate-brown: #5D4037;
+            --warm-white: #FEFEFE;
+            --accent-pink: #E8B4BC;
+        }
+
+        /* Navigation - Desktop */
+        .navbar {
+            background: var(--warm-white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--chocolate-brown);
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover {
+            color: var(--chocolate-brown);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--chocolate-brown);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--chocolate-brown);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Search & Cart - Desktop */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 2px solid var(--beige);
+            border-radius: 25px;
+            width: 250px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(232, 180, 188, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .cart-icon {
+            font-size: 1.2rem;
+            color: var(--chocolate-brown);
+            cursor: pointer;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background: var(--warm-white);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            padding: 5rem 2rem 2rem;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu li {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-menu a {
+            font-size: 1.2rem;
+            color: var(--chocolate-brown);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--light-pink) 0%, var(--cream) 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 700;
+            color: var(--chocolate-brown);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #666;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--chocolate-brown);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(93, 64, 55, 0.3);
+            animation: fadeInUp 1s ease 0.4s both;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(93, 64, 55, 0.4);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Sections */
+        .featured, .catalog, .reviews, .about, .contact, .product-detail, .cart {
+            padding: 80px 0;
+        }
+
+        .featured {
+            background: var(--cream);
+        }
+
+        .catalog, .cart {
+            background: var(--warm-white);
+        }
+
+        .reviews {
+            background: var(--cream);
+        }
+
+        .about, .contact {
+            background: var(--warm-white);
+        }
+
+        .product-detail {
+            background: var(--cream);
+            min-height: 100vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 600;
+            color: var(--chocolate-brown);
+            margin-bottom: 3rem;
+        }
+
+        /* Products Grid - Responsive */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(45deg, var(--light-pink), var(--beige));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(3rem, 8vw, 4rem);
+            color: var(--accent-pink);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--chocolate-brown);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--chocolate-brown);
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: var(--chocolate-brown);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #4a362e;
+            transform: translateY(-2px);
+        }
+
+        /* Filters - Responsive */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--beige);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: white;
+        }
+
+        /* Product Detail - Responsive */
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        .detail-image {
+            height: 400px;
+            background: linear-gradient(45deg, var(--light-pink), var(--beige));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(4rem, 12vw, 6rem);
+            color: var(--accent-pink);
+        }
+
+        @media (min-width: 768px) {
+            .detail-image {
+                height: 500px;
+            }
+        }
+
+        .detail-content h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--chocolate-brown);
+            margin-bottom: 1rem;
+        }
+
+        .detail-price {
+            font-size: clamp(1.8rem, 4vw, 2rem);
+            color: var(--chocolate-brown);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            max-width: 200px;
+        }
+
+        .quantity-btn {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--beige);
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+
+        #quantity {
+            font-size: 1.3rem;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Cart - Responsive */
+        .cart-items {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: var(--light-pink);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            justify-self: center;
+        }
+
+        @media (max-width: 768px) {
+            .cart-item-image {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+            }
+        }
+
+        .cart-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .cart-summary h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Reviews */
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .stars {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .review-card h4 {
+            color: var(--chocolate-brown);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* About & Contact */
+        .about-content, .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p, .contact-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-info-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .contact-info-item i {
+            font-size: 2.5rem;
+            color: var(--accent-pink);
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--beige);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(232, 180, 188, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--chocolate-brown);
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer .container {
+            padding: 0 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: var(--accent-pink);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Page Visibility */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Scroll to top */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile First Responsive Breakpoints */
+        /* Mobile (up to 480px) */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero {
+                padding: 100px 0 60px;
+            }
+            
+            .section-title {
+                margin-bottom: 2rem;
+            }
+            
+            .filters {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Tablet (481px - 768px) */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .search-input {
+                width: 180px;
+            }
+
+            .nav-actions {
+                gap: 0.5rem;
+            }
+
+            .hero {
+                padding: 110px 0 60px;
+            }
+
+            .quantity-selector {
+                justify-content: center;
+            }
+
+            .cta-button {
+                padding: 0.9rem 2rem;
+            }
+        }
+
+        /* Small Desktop (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        /* Large Desktop (1025px+) */
+        @media (min-width: 1025px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .product-card,
+            .review-card,
+            .cart-summary {
+                box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#" onclick="showPage('home'); closeMobileMenu()">Home</a></li>
+            <li><a href="#" onclick="showPage('catalog'); closeMobileMenu()">Shop</a></li>
+            <li><a href="#" onclick="showPage('reviews'); closeMobileMenu()">Reviews</a></li>
+            <li><a href="#" onclick="showPage('about'); closeMobileMenu()">About</a></li>
+            <li><a href="#" onclick="showPage('contact'); closeMobileMenu()">Contact</a></li>
+            <li><a href="#" onclick="showPage('cart'); closeMobileMenu()">
+                <i class="fas fa-shopping-cart"></i> Cart (<span id="mobileCartCount">0</span>)
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <i class="fas fa-birthday-cake"></i> Love to Eat
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('catalog')">Shop</a></li>
+                <li><a href="#" onclick="showPage('reviews')">Reviews</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search treats..." id="searchInput">
+                </div>
+                <div class="cart-icon" onclick="showPage('cart')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Freshly Baked Happiness<br>Every Day</h1>
+                <p>Indulge in our artisanal pastries, decadent cakes,<br>and warm breads made with love.</p>
+                <button class="cta-button" onclick="showPage('catalog')">Shop Now</button>
+            </div>
+        </div>
+
+        <section class="featured">
+            <div class="container">
+                <h2 class="section-title">Featured Treats</h2>
+                <div class="products-grid">
+                    <div class="product-card" onclick="showProductDetail('Velvet Red Cake', 29.99, '🍰', 'Moist red velvet with cream cheese frosting')">
+                        <div class="product-image">🍰</div>
+                        <div class="product-info">
+                            <h3 class="product-title">Velvet Red Cake</h3>
+                            <div class="product-price">$29.99</div>
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart('Velvet Red Cake', 29.99, '🍰')">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-card" onclick="showProductDetail('Vanilla Cupcakes', 18.99, '🧁', 'Classic vanilla with buttercream frosting')">
+                        <div class="product-image">🧁</div>
+                        <div class="product-info">
+                            <h3 class="product-title">Vanilla Cupcakes</h3>
+                            <div class="product-price">$18.99</div>
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart('Vanilla Cupcakes', 18.99, '🧁')">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-card" onclick="showProductDetail('Chocolate Chip Cookies', 12.99, '🍪', 'Gooey chocolate chips in every bite')">
+                        <div class="product-image">🍪</div>
+                        <div class="product-info">
+                            <h3 class="product-title">Chocolate Chip Cookies</h3>
+                            <div class="product-price">$12.99</div>
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart('Chocolate Chip Cookies', 12.99, '🍪')">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Product Catalog -->
+    <section id="catalog" class="page">
+        <div class="catalog">
+            <div class="container">
+                <h2 class="section-title">Our Bakery Collection</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="cakes">Cakes</button>
+                    <button class="filter-btn" data-category="cupcakes">Cupcakes</button>
+                    <button class="filter-btn" data-category="cookies">Cookies</button>
+                    <button class="filter-btn" data-category="breads">Breads</button>
+                </div>
+                <div class="products-grid" id="catalogGrid">
+                    <!-- Products populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail -->
+    <section id="product-detail" class="page">
+        <div class="product-detail">
+            <div class="container">
+                <div class="product-detail-container">
+                    <div class="detail-image" id="detailImage">🍰</div>
+                    <div class="detail-content">
+                        <h1 id="detailTitle">Velvet Red Cake</h1>
+                        <div class="detail-price" id="detailPrice">$29.99</div>
+                        <div class="quantity-selector">
+                            <button class="quantity-btn" onclick="changeQuantity(-1)">−</button>
+                            <span id="quantity">1</span>
+                            <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                        </div>
+                        <p id="detailDescription">Our signature Velvet Red Cake features layers of moist red velvet cake with creamy cream cheese frosting. Perfect for any celebration!</p>
+                        <div class="stars">★★★★★ (127 reviews)</div>
+                        <button class="add-to-cart" style="width: 100%; padding: 1.2rem; margin-top: 1.5rem; font-size: 1.1rem;" 
+                                onclick="addToCartFromDetail()">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="cta-button" style="width: 100%; margin-top: 1rem; background: var(--accent-pink);"
+                                onclick="showPage('catalog')">
+                            ← Back to Shop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Page -->
+    <section id="cart" class="page">
+        <div class="cart">
+            <div class="container">
+                <h2 class="section-title">Your Cart</h2>
+                <div class="cart-items" id="cartItems"></div>
+                <div class="cart-summary">
+                    <h3>Total: $<span id="cartTotal">0.00</span></h3>
+                    <button class="cta-button" style="width: 100%; padding: 1.2rem; font-size: 1.1rem; margin-top: 1rem;" onclick="checkout()">
+                        <i class="fas fa-credit-card"></i> Proceed to Checkout
+                    </button>
+                    <button class="cta-button" style="width: 100%; margin-top: 1rem; background: var(--accent-pink);" 
+                            onclick="showPage('catalog')">
+                        ← Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Page -->
+    <section id="reviews" class="page">
+        <div class="reviews">
+            <div class="container">
+                <h2 class="section-title">Loved by Thousands</h2>
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div class="stars" style="font-size: 2rem; display: inline-block; margin-bottom: 0.5rem;">★★★★★</div>
+                    <p style="color: #666; font-size: 1.2rem;">4.9/5 from 1,247 reviews</p>
+                </div>
+                <div class="products-grid">
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <h4>Sarah K.</h4>
+                        <p>"The best cupcakes I've ever had! So moist and flavorful. The chocolate frosting is to die for! Will be back weekly!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <h4>Mike R.</h4>
+                        <p>"Perfect for our wedding cake tasting. Every flavor was amazing. Professional service and incredible quality!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <h4>Lisa M.</h4>
+                        <p>"Love the fresh bread! The sourdough is incredible. Delivery was fast and packaging kept everything perfect."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★☆</div>
+                        <h4>James T.</h4>
+                        <p>"Cookies were delicious but wished they came in a larger pack. Everything else was perfect!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page">
+        <div class="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">Baked with Love Since 2015</h2>
+                    <div style="font-size: clamp(4rem, 12vw, 6rem); margin: 2rem 0;">💖</div>
+                    <p>At Love to Eat, baking is more than a craft—it's our passion. Founded by third-generation bakers, we bring 50+ years of family recipes to your table.</p>
+                    <p>We source premium ingredients from local farms and artisans, ensuring every bite bursts with freshness. From our signature red velvet to daily artisan breads, quality never compromises.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                        <div>
+                            <h3 style="color: var(--chocolate-brown); margin-bottom: 1rem;">🌾 Fresh Daily</h3>
+                            <p>Baked fresh every morning with no preservatives</p>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--chocolate-brown); margin-bottom: 1rem;">🥛 Local Ingredients</h3>
+                            <p>Supporting local farms and suppliers</p>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--chocolate-brown); margin-bottom: 1rem;">🎂 Custom Orders</h3>
+                            <p>Special orders for any celebration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page">
+        <div class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <h2 class="section-title">Let's Talk Treats</h2>
+                    <p>Questions about orders? Custom cake needs? We're here to help make your sweet dreams reality!</p>
+                    
+                    <div class="contact-info-grid">
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Visit Us</h3>
+                            <p>123 Sweet Street<br>Bakery Town, BT 12345<br>Mon-Sat 7AM-8PM</p>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone"></i>
+                            <h3>Call Us</h3>
+                            <p>(555) 123-4567</p>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Email</h3>
+                            <p>hello@lovetoeat.com</p>
+                        </div>
+                    </div>
+
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Your Phone (optional)">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Tell us about your sweet tooth... What can we bake for you?" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%; padding: 1.2rem;">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3><i class="fas fa-birthday-cake"></i> Love to Eat</h3>
+            <p>Freshly Baked Happiness Every Day</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 Love to Eat Bakery. All rights reserved. | Made with ❤️</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+            document.getElementById('mobileOverlay').classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.getElementById('mobileOverlay').classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.mobile-menu') && !e.target.closest('.mobile-menu-btn') && 
+                document.getElementById('mobileMenu').classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Page Navigation
+        function showPage(pageId) {
+            // Close mobile menu first
+            closeMobileMenu();
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            // Load catalog if needed
+            if (pageId === 'catalog') {
+                loadCatalog();
+            }
+            
+            // Scroll to top on page change
+            if (pageId === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Cart System
+        let cart = [];
+        let quantity = 1;
+        let currentProduct = {};
+
+        function addToCart(name, price, emoji) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ name, price, emoji, quantity });
+            }
+            updateCartDisplay();
+            showNotification(`Added ${quantity} ${name} to cart! 🛒`);
+            quantity = 1; // Reset quantity
+        }
+
+        function addToCartFromDetail() {
+            currentProduct.quantity = quantity;
+            addToCart(currentProduct.name, currentProduct.price, currentProduct.emoji);
+        }
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cartCount');
+            const mobileCartCount = document.getElementById('mobileCartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            mobileCartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div style="text-align: center; padding: 3rem 1rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
+                        <h3>Your cart is empty</h3>
+                        <p style="color: #666; margin-bottom: 2rem;">Start adding some delicious treats!</p>
+                        <button class="cta-button" onclick="showPage('catalog')" style="padding: 1rem 2rem;">
+                            Start Shopping
+                        </button>
+                    </div>
+                `;
+                cartTotal.textContent = '0.00';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="cart-item-image">${item.emoji}</div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem;">${item.name}</h4>
+                        <p style="color: #666; margin-bottom: 0.5rem;">$${item.price.toFixed(2)} each</p>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                            <button onclick="updateCartQuantity(${index}, -1)" class="quantity-btn" style="width: 35px; height: 35px;">−</button>
+                            <span style="font-weight: 600; font-size: 1.1rem;">${item.quantity}</span>
+                            <button onclick="updateCartQuantity(${index}, 1)" class="quantity-btn" style="width: 35px; height: 35px;">+</button>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <button onclick="removeFromCart(${index})" style="background: #ff6b6b; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 500; margin-bottom: 0.5rem; display: block; width: 100%;">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                        <strong style="font-size: 1.3rem; color: var(--chocolate-brown);">$${(item.price * item.quantity).toFixed(2)}</strong>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function updateCartQuantity(index, change) {
+            cart[index].quantity = Math.max(1, cart[index].quantity + change);
+            if (cart[index].quantity === 0) {
+                cart.splice(index, 1);
+            }
+            updateCartDisplay();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        function changeQuantity(change) {
+            quantity = Math.max(1, quantity + change);
+            document.getElementById('quantity').textContent = quantity;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'error');
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            showNotification(`Order placed successfully! Total: $${total.toFixed(2)} 🎉`, 'success');
+            cart = [];
+            updateCartDisplay();
+            setTimeout(() => showPage('home'), 1500);
+        }
+
+        // Products Data
+        const products = [
+            { name: 'Velvet Red Cake', price: 29.99, emoji: '🍰', category: 'cakes', description: 'Moist red velvet layers with creamy cream cheese frosting. Perfect for celebrations!' },
+            { name: 'Chocolate Lava Cake', price: 34.99, emoji: '🍫', category: 'cakes', description: 'Warm molten chocolate center with vanilla bean ice cream' },
+            { name: 'Lemon Layer Cake', price: 32.99, emoji: '🍋', category: 'cakes', description: 'Tangy lemon curd filling with light lemon buttercream' },
+            { name: 'Vanilla Cupcakes (6)', price: 18.99, emoji: '🧁', category: 'cupcakes', description: 'Classic vanilla cupcakes with buttercream frosting' },
+            { name: 'Lemon Cupcakes (6)', price: 19.99, emoji: '🍋', category: 'cupcakes', description: 'Zesty lemon cupcakes with lemon curd centers' },
+            { name: 'Chocolate Chip Cookies (12)', price: 12.99, emoji: '🍪', category: 'cookies', description: 'Gooey chocolate chips in soft-baked cookies' },
+            { name: 'Oatmeal Raisin Cookies (12)', price: 11.99, emoji: '🍪', category: 'cookies', description: 'Chewy oatmeal cookies with plump raisins' },
+            { name: 'Sourdough Bread', price: 8.99, emoji: '🍞', category: 'breads', description: 'Handcrafted artisan sourdough, baked daily' },
+            { name: 'Brioche Buns (6)', price: 7.99, emoji: '🍞', category: 'breads', description: 'Buttery soft buns perfect for burgers & sandwiches' }
+        ];
+
+        function loadCatalog() {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" data-category="${product.category}" 
+                     onclick="showProductDetail('${product.name}', ${product.price}, '${product.emoji}', '${product.description}')">
+                    <div class="product-image">${product.emoji}</div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, '${product.emoji}')">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showProductDetail(name, price, emoji, description) {
+            currentProduct = { name, price, emoji };
+            document.getElementById('detailTitle').textContent = name;
+            document.getElementById('detailPrice').textContent = `$${price.toFixed(2)}`;
+            document.getElementById('detailImage').textContent = emoji;
+            document.getElementById('detailDescription').textContent = description;
+            quantity = 1;
+            document.getElementById('quantity').textContent = '1';
+            showPage('product-detail');
+        }
+
+        // Filter & Search
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                const category = e.target.dataset.category;
+                const cards = document.querySelectorAll('#catalogGrid .product-card');
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        card.style.opacity = '1';
+                    } else {
+                        card.style.opacity = '0.5';
+                        card.style.transform = 'scale(0.95)';
+                    }
+                });
+            }
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('#catalogGrid .product-card');
+            cards.forEach(card => {
+                const title = card.querySelector('.product-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'block';
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Forms
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Thank you! We\'ll respond within 24 hours. 📧', 'success');
+            this.reset();
+        });
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 120px;
+                right: 20px;
+                background: ${type === 'error' ? '#ff6b6b' : 'var(--chocolate-brown)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+                z-index: 10001;
+                font-weight: 500;
+                max-width: 350px;
+                animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            `;
+            notification.innerHTML = `
+                <i class="fas ${type === 'error' ? 'fa-exclamation-triangle' : 'fa-check-circle'}" style="margin-right: 0.5rem;"></i>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'none';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+
+            // Swipe left to go to cart
+            if (Math.abs(diffX) > 50 && Math.abs(diffY) < 50 && diffX > 0) {
+                showPage('cart');
+            }
+        });
+
+        // Initialize
+        updateCartDisplay();
+        loadCatalog(); // Preload for faster navigation
+    </script>
+</body>
+</html>
